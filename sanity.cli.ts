@@ -10,5 +10,7 @@ export default defineCliConfig({
     dataset: 'production',
   },
   studioHost: 'thematrixisadocumentary',
-  autoUpdates: true,
+  deployment: {
+    autoUpdates: true,
+  },
 });
