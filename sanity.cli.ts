@@ -11,6 +11,7 @@ export default defineCliConfig({
   },
   studioHost: 'thematrixisadocumentary',
   deployment: {
+    appId: 'cbujt7q983mv94pes2o4gfiw',
     autoUpdates: true,
   },
 });
