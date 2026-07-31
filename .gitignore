@@ -38,3 +38,6 @@ next-env.d.ts
 
 # design handoff bundle — kept local only (contains the full manuscript; art already in public/assets)
 /design_handoff
+
+# local Vercel env helper (contains secrets)
+env.vercel*.txt

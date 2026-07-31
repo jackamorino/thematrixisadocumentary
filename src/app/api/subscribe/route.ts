@@ -5,10 +5,15 @@ export const runtime = 'nodejs';
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 /**
- * Lead-magnet subscribe endpoint. Delivers the free Prologue + Chapter One offer
- * by adding the subscriber to the configured ESP. Provider is chosen via
- * EMAIL_PROVIDER; 'none' (default) validates and accepts without an external call
- * so the flow works locally before an ESP is wired up.
+ * Lead-magnet subscribe endpoint.
+ *
+ * Flow: capture email -> add to the MailerLite list/group. MailerLite's welcome
+ * automation ("on join group -> send email with the download link") delivers the
+ * free sample, and can drip follow-ups / newsletters over time. No email is sent
+ * from here; the platform owns delivery, double opt-in, and unsubscribe handling.
+ *
+ * If MailerLite isn't configured yet, we still accept the address (logged) so the
+ * form works locally and never fails a real signup on a config gap.
  */
 export async function POST(req: Request) {
   let email = '';
@@ -23,18 +28,18 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'Please enter a valid email.' }, { status: 400 });
   }
 
-  const provider = (process.env.EMAIL_PROVIDER || 'none').toLowerCase();
+  const provider = (process.env.EMAIL_PROVIDER || 'mailerlite').toLowerCase();
 
   try {
     switch (provider) {
+      case 'mailerlite':
+        await subscribeMailerLite(email);
+        break;
       case 'resend':
         await subscribeResend(email);
         break;
       case 'convertkit':
         await subscribeConvertKit(email);
-        break;
-      case 'mailerlite':
-        await subscribeMailerLite(email);
         break;
       case 'none':
       default:
@@ -51,18 +56,47 @@ export async function POST(req: Request) {
   }
 }
 
-async function subscribeResend(email: string) {
-  const apiKey = process.env.RESEND_API_KEY;
-  const audienceId = process.env.RESEND_AUDIENCE_ID;
-  if (!apiKey || !audienceId) throw new Error('Resend not configured');
-  const res = await fetch(`https://api.resend.com/audiences/${audienceId}/contacts`, {
+async function subscribeMailerLite(email: string) {
+  const apiKey = process.env.MAILERLITE_API_KEY;
+  const groupId = process.env.MAILERLITE_GROUP_ID;
+  if (!apiKey) {
+    // Not wired up yet — capture without failing the signup.
+    console.warn(`[subscribe] MailerLite not configured; captured: ${email}`);
+    return;
+  }
+  const res = await fetch('https://connect.mailerlite.com/api/subscribers', {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${apiKey}`,
       'Content-Type': 'application/json',
+      Accept: 'application/json',
     },
-    body: JSON.stringify({ email, unsubscribed: false }),
+    body: JSON.stringify({
+      email,
+      ...(groupId ? { groups: [groupId] } : {}),
+    }),
   });
+  // 200/201 = created/updated; 422 with "already exists" is also fine.
+  if (!res.ok && res.status !== 422) {
+    throw new Error(`MailerLite ${res.status}`);
+  }
+}
+
+async function subscribeResend(email: string) {
+  const apiKey = process.env.RESEND_API_KEY;
+  const audienceId = process.env.RESEND_AUDIENCE_ID;
+  if (!apiKey || !audienceId) throw new Error('Resend not configured');
+  const res = await fetch(
+    `https://api.resend.com/audiences/${audienceId}/contacts`,
+    {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, unsubscribed: false }),
+    }
+  );
   if (!res.ok) throw new Error(`Resend ${res.status}`);
 }
 
@@ -70,25 +104,13 @@ async function subscribeConvertKit(email: string) {
   const apiKey = process.env.CONVERTKIT_API_KEY;
   const formId = process.env.CONVERTKIT_FORM_ID;
   if (!apiKey || !formId) throw new Error('ConvertKit not configured');
-  const res = await fetch(`https://api.convertkit.com/v3/forms/${formId}/subscribe`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ api_key: apiKey, email }),
-  });
+  const res = await fetch(
+    `https://api.convertkit.com/v3/forms/${formId}/subscribe`,
+    {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ api_key: apiKey, email }),
+    }
+  );
   if (!res.ok) throw new Error(`ConvertKit ${res.status}`);
-}
-
-async function subscribeMailerLite(email: string) {
-  const apiKey = process.env.MAILERLITE_API_KEY;
-  const groupId = process.env.MAILERLITE_GROUP_ID;
-  if (!apiKey) throw new Error('MailerLite not configured');
-  const res = await fetch('https://connect.mailerlite.com/api/subscribers', {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ email, ...(groupId ? { groups: [groupId] } : {}) }),
-  });
-  if (!res.ok) throw new Error(`MailerLite ${res.status}`);
 }
