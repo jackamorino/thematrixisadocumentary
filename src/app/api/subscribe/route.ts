@@ -1,8 +1,14 @@
 import { NextResponse } from 'next/server';
 
+import { createDownloadToken } from '@/lib/download-token';
+
 export const runtime = 'nodejs';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+// MailerLite custom-field key that carries each subscriber's unique download token.
+// Create a text field with this key in MailerLite (Subscribers → Fields).
+const TOKEN_FIELD = process.env.MAILERLITE_TOKEN_FIELD || 'download_token';
 
 /**
  * Lead-magnet subscribe endpoint.
@@ -64,6 +70,10 @@ async function subscribeMailerLite(email: string) {
     console.warn(`[subscribe] MailerLite not configured; captured: ${email}`);
     return;
   }
+  // Mint this subscriber's unique download token and store it in a custom field.
+  // The MailerLite welcome email links to /api/download?t={$download_token}.
+  const downloadToken = createDownloadToken(email);
+
   const res = await fetch('https://connect.mailerlite.com/api/subscribers', {
     method: 'POST',
     headers: {
@@ -73,6 +83,7 @@ async function subscribeMailerLite(email: string) {
     },
     body: JSON.stringify({
       email,
+      fields: { [TOKEN_FIELD]: downloadToken },
       ...(groupId ? { groups: [groupId] } : {}),
     }),
   });

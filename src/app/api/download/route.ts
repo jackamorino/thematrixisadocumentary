@@ -1,26 +1,27 @@
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 
+import { verifyDownloadToken } from '@/lib/download-token';
+
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 /**
  * Serves the free sample (Prologue + Chapter One) from private storage — the file
- * is NOT in /public, so the only way to reach it is this route. The MailerLite
- * welcome automation emails a stable link:  /api/download?k=<DOWNLOAD_ACCESS_KEY>
+ * is NOT in /public, so the only way to reach it is this route.
  *
- * The key is a light gate so the PDF isn't discoverable without it. If
- * DOWNLOAD_ACCESS_KEY is unset, the route serves openly (still fine — it's a
- * giveaway), so local/dev works with zero config.
+ * Each subscriber gets a unique link. MailerLite's welcome automation inserts their
+ * per-user token from a custom field:  /api/download?t={$download_token}
+ * We verify the HMAC signature; an invalid/missing token 404s.
  */
 export async function GET(req: Request) {
-  const required = process.env.DOWNLOAD_ACCESS_KEY;
-  if (required) {
-    const key = new URL(req.url).searchParams.get('k');
-    if (key !== required) {
-      return new Response('Not found', { status: 404 });
-    }
+  const token = new URL(req.url).searchParams.get('t');
+  const email = verifyDownloadToken(token);
+  if (!email) {
+    return new Response('Not found', { status: 404 });
   }
+  // We know exactly who downloaded — useful for attribution/analytics.
+  console.info(`[download] served sample to ${email}`);
 
   try {
     const filePath = join(process.cwd(), 'private', 'the-beginning.pdf');
