@@ -201,20 +201,61 @@ img {
   font-size: 16px;
   letter-spacing: 0.06em;
 }
-.nav__toggle {
-  display: none;
+/* Squeeze burger — adapted from github.com/march08/animated-burgers (MIT).
+   No border; vertically centered with the wordmark via the nav's align-items:center. */
+.nav__burger {
+  display: none; /* shown under 720px */
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
   background: none;
-  border: 1px solid var(--line-20);
-  border-radius: 2px;
-  color: var(--text-75);
-  padding: 8px 12px;
-  font-size: 20px;
-  line-height: 1;
+  border: none;
   cursor: pointer;
+  color: var(--gold);
+  line-height: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+.burger-lines {
+  display: inline-block;
+  position: relative;
+  width: 26px;
+  height: 3px;
+  border-radius: 3px;
+  background-color: currentColor;
+  transition: background-color 0.15s ease;
+  vertical-align: middle;
+}
+.burger-lines::before,
+.burger-lines::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 26px;
+  height: 3px;
+  border-radius: 3px;
+  background-color: currentColor;
+  transition: transform 0.2s ease, top 0.2s ease;
+}
+.burger-lines::before {
+  top: -8px;
+}
+.burger-lines::after {
+  top: 8px;
+}
+.nav__burger.open .burger-lines {
+  background-color: transparent;
+}
+.nav__burger.open .burger-lines::before {
+  top: 0;
+  transform: rotate(45deg);
+}
+.nav__burger.open .burger-lines::after {
+  top: 0;
+  transform: rotate(-45deg);
 }
 
 @media (max-width: 720px) {
-  .nav__toggle {
+  .nav__burger {
     display: inline-flex;
   }
   .nav__links {
@@ -962,6 +1003,20 @@ img {
 .article-prose em {
   color: var(--gold-bright);
   font-style: italic;
+}
+/* In-body quotes (Portable Text blockquote style): a quiet echo of the
+   pull-quote band, so the book's voice reads as sacred text, not an indent. */
+.article-prose blockquote {
+  margin: 42px 0;
+  padding: 2px 10px 2px 28px;
+  border-left: 2px solid var(--gold-55);
+  font-style: italic;
+  font-size: clamp(20px, 2.2vw, 24px);
+  line-height: 1.7;
+  color: var(--gold-bright);
+}
+.article-prose blockquote p {
+  margin: 0;
 }
 .pull-quote {
   border-top: 1px solid var(--gold-line-3);
