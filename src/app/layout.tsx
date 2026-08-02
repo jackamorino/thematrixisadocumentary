@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import Script from 'next/script';
 
 import { JsonLd } from '@/components/JsonLd';
@@ -43,6 +43,10 @@ export const metadata: Metadata = {
     canonical: SITE_URL,
     types: { 'application/rss+xml': `${SITE_URL}/feed.xml` },
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: '#05070d',
 };
 
 export default function RootLayout({
