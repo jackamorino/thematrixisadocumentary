@@ -46,7 +46,7 @@ export default function TheBookPage() {
         {/* Split hero */}
         <section className="split-hero split-hero--left">
           <Image
-            src="/assets/cover.png"
+            src="/blog-images/the-matrix-is-a-documentary-cover-web.png"
             alt="The Matrix is a Documentary book cover"
             width={380}
             height={570}

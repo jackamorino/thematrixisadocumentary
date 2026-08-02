@@ -34,7 +34,7 @@ export async function generateMetadata({
     title: post.seo?.metaTitle || post.title,
     description: post.seo?.metaDescription || post.excerpt,
     path: `/blog/${post.slug}`,
-    image: post.coverImage?.startsWith('http') ? post.coverImage : post.coverImage || '/assets/cover.png',
+    image: post.coverImage?.startsWith('http') ? post.coverImage : post.coverImage || '/blog-images/the-matrix-is-a-documentary-cover-web.png',
     type: 'article',
     publishedTime: post.publishedAt,
   });
@@ -50,6 +50,20 @@ export default async function ArticlePage({
   if (!post) notFound();
 
   const related = await getRelatedPosts(slug);
+
+  // Freshness signal: surface "Updated" only when the post was meaningfully
+  // revised after publication (> 7 days), so routine tweaks stay invisible.
+  const WEEK_MS = 7 * 24 * 60 * 60 * 1000;
+  const updatedLabel =
+    post._updatedAt &&
+    new Date(post._updatedAt).getTime() - new Date(post.publishedAt).getTime() >
+      WEEK_MS
+      ? new Date(post._updatedAt).toLocaleDateString('en-US', {
+          month: 'long',
+          day: 'numeric',
+          year: 'numeric',
+        })
+      : null;
 
   return (
     <>
@@ -90,6 +104,12 @@ export default async function ArticlePage({
             <h1 className="article-header__title">{post.title}</h1>
             <p className="article-header__meta">
               By {siteConfig.author.name} · From <em>Keys Left Behind</em>
+              {updatedLabel && (
+                <>
+                  {' '}
+                  · Updated <time dateTime={post._updatedAt}>{updatedLabel}</time>
+                </>
+              )}
             </p>
           </div>
         </header>
@@ -111,7 +131,7 @@ export default async function ArticlePage({
           {/* In-article book CTA */}
           <div className="cta-card">
             <Image
-              src="/assets/cover.png"
+              src="/blog-images/the-matrix-is-a-documentary-cover-web.png"
               alt="The Matrix is a Documentary book cover"
               width={110}
               height={165}

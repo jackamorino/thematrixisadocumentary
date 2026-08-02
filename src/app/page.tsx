@@ -57,7 +57,7 @@ export default async function HomePage() {
             oldest confession, dressed as fiction.&rdquo;
           </p>
           <Image
-            src="/assets/cover.png"
+            src="/blog-images/the-matrix-is-a-documentary-cover-web.png"
             alt="The Matrix is a Documentary book cover"
             width={400}
             height={600}

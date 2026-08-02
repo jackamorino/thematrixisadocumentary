@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import { buyLinks, cycleLabel, siteConfig, SITE_URL } from './site';
 import type { Post, Video } from './types';
 
-const OG_IMAGE = '/assets/cover.png';
+const OG_IMAGE = '/blog-images/the-matrix-is-a-documentary-cover-web.png';
 const OG_ICON = '/assets/book-icon.png';
 
 interface PageMetaInput {
@@ -40,7 +40,7 @@ export function pageMetadata({
       siteName: siteConfig.name,
       type,
       ...(publishedTime ? { publishedTime } : {}),
-      images: [{ url: image, width: 1200, height: 1800, alt: siteConfig.name }],
+      images: [{ url: image, width: 900, height: 1350, alt: siteConfig.name }],
     },
     twitter: {
       card: 'summary_large_image',
@@ -120,7 +120,7 @@ export function articleJsonLd(post: Post): JsonLd {
         }
       : {}),
     datePublished: post.publishedAt,
-    dateModified: post.publishedAt,
+    dateModified: post._updatedAt ?? post.publishedAt,
     author: { '@type': 'Person', name: siteConfig.author.name },
     publisher: {
       '@type': 'Organization',
