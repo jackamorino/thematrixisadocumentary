@@ -42,7 +42,6 @@ export const navLinks = [
   { href: '/the-book', label: 'The Book' },
   { href: '/the-author', label: 'The Author' },
   { href: '/blog', label: 'Blog' },
-  { href: '/videos', label: 'Videos' },
 ] as const;
 
 /**

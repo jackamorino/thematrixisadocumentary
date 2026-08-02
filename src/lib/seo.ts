@@ -30,7 +30,9 @@ export function pageMetadata({
     : `${siteConfig.name}: ${siteConfig.subtitle}`;
 
   return {
-    title: title || `${siteConfig.name}: ${siteConfig.subtitle}`,
+    // Homepage SERP title stays under ~60 chars; the full subtitle truncates
+    // in results, so it lives in the OG title, H1, and Book JSON-LD instead.
+    title: title || `${siteConfig.name}: A Book by ${siteConfig.author.name}`,
     description,
     alternates: { canonical: url },
     openGraph: {

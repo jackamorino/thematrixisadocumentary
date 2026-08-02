@@ -19,7 +19,7 @@ export function PostCard({
       {post.coverImage && (
         <Image
           src={post.coverImage}
-          alt={post.title}
+          alt={post.coverImageAlt ?? post.title}
           width={600}
           height={imageHeight}
           className="post-card__img"

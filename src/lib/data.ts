@@ -29,7 +29,11 @@ function resolvePost(p: RawPost): Post {
     typeof p.coverImage === 'string'
       ? p.coverImage
       : imageUrl(p.coverImage as never, 1200) || undefined;
-  return { ...p, coverImage: cover } as Post;
+  const alt =
+    p.coverImage && typeof p.coverImage === 'object' && 'alt' in p.coverImage
+      ? ((p.coverImage as { alt?: string }).alt ?? undefined)
+      : undefined;
+  return { ...p, coverImage: cover, coverImageAlt: alt } as Post;
 }
 
 export async function getPosts(): Promise<Post[]> {
@@ -86,5 +90,10 @@ export async function getAuthor(): Promise<AuthorInfo> {
     typeof data.photo === 'string'
       ? data.photo
       : imageUrl(data.photo as never, 900) || undefined;
-  return { ...seedAuthor, ...data, photo } as AuthorInfo;
+  // GROQ projections return explicit nulls for missing fields; a null must not
+  // override the seed value (author.bio.map would crash on a photo-only doc).
+  const present = Object.fromEntries(
+    Object.entries(data).filter(([, v]) => v !== null && v !== undefined)
+  );
+  return { ...seedAuthor, ...present, photo } as AuthorInfo;
 }

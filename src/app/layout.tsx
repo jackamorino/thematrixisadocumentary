@@ -11,7 +11,9 @@ import './globals.css';
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: `${siteConfig.name}: ${siteConfig.subtitle}`,
+    // SERP-length homepage title (52 chars; the full subtitle truncates at ~60
+    // and lives in the H1 and Book JSON-LD instead).
+    default: `${siteConfig.name}: A Book by ${siteConfig.author.name}`,
     template: `%s · ${siteConfig.name}`,
   },
   description: siteConfig.description,

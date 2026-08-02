@@ -1,4 +1,4 @@
-import { defineField, defineType } from 'sanity';
+import { defineField, defineType, type Rule } from 'sanity';
 
 export const post = defineType({
   name: 'post',
@@ -47,6 +47,14 @@ export const post = defineType({
       title: 'Cover Image',
       type: 'image',
       options: { hotspot: true },
+      fields: [
+        defineField({
+          name: 'alt',
+          title: 'Alt text',
+          type: 'string',
+          description: 'Describe the image for screen readers and SEO (one sentence).',
+        }),
+      ],
     }),
     defineField({
       name: 'body',
@@ -63,6 +71,27 @@ export const post = defineType({
             decorators: [
               { title: 'Emphasis', value: 'em' },
               { title: 'Strong', value: 'strong' },
+            ],
+            annotations: [
+              {
+                name: 'link',
+                title: 'Link',
+                type: 'object',
+                fields: [
+                  {
+                    name: 'href',
+                    title: 'URL',
+                    type: 'url',
+                    description:
+                      'External URL or site-relative path (e.g. /#signup, /the-book).',
+                    validation: (r: Rule) =>
+                      r.uri({
+                        allowRelative: true,
+                        scheme: ['http', 'https', 'mailto'],
+                      }),
+                  },
+                ],
+              },
             ],
           },
         },

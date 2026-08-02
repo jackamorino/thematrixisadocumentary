@@ -12,6 +12,8 @@ export interface SeoFields {
 
 export interface Post {
   _id: string;
+  /** Sanity revision timestamp; absent on seed content. */
+  _updatedAt?: string;
   title: string;
   slug: string;
   cycle: CycleKey;
@@ -19,6 +21,8 @@ export interface Post {
   /** Local asset path (seed) OR resolved Sanity image URL. */
   coverImage?: string;
   coverImageRef?: Image;
+  /** Alt text authored on the Sanity image (falls back to post title in the UI). */
+  coverImageAlt?: string;
   /** Portable Text from Sanity, OR pre-split verse lines for seed content. */
   body?: PortableTextBlock[];
   /** Verse-style plain text (seed / fallback). Preserves manuscript line breaks. */

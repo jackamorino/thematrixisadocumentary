@@ -1,12 +1,10 @@
 import Image from 'next/image';
-import Link from 'next/link';
 
 import { Footer } from '@/components/Footer';
 import { JsonLd } from '@/components/JsonLd';
 import { Nav } from '@/components/Nav';
 import { getAuthor } from '@/lib/data';
 import { breadcrumbJsonLd, pageMetadata, personJsonLd } from '@/lib/seo';
-import { buyLinks } from '@/lib/site';
 
 export const metadata = pageMetadata({
   title: 'The Author',
@@ -104,41 +102,6 @@ export default async function TheAuthorPage() {
           </p>
         </section>
 
-        {/* Decode The Real cross-promo */}
-        <section className="split-hero" style={{ background: 'var(--bg)' }}>
-          <Image
-            src="/assets/book-icon.png"
-            alt=""
-            width={280}
-            height={280}
-            className="split-hero__cover"
-            style={{ width: 'min(280px,70vw)' }}
-            sizes="(max-width: 640px) 70vw, 280px"
-          />
-          <div className="split-hero__copy" style={{ minWidth: 'min(400px,100%)' }}>
-            <p className="eyebrow">BEYOND THE BOOK</p>
-            <h2 className="section-title" style={{ fontSize: 'clamp(26px,3vw,36px)' }}>
-              Decode The Real
-            </h2>
-            <p className="split-hero__para" style={{ color: 'var(--text-70)' }}>
-              The remembering continues on YouTube, where Jack keeps turning the
-              Keys, one video at a time.
-            </p>
-            <div className="btn-row" style={{ marginTop: 28 }}>
-              <a
-                href={buyLinks.youtube}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-primary btn-sm"
-              >
-                VISIT THE CHANNEL
-              </a>
-              <Link href="/videos" className="btn btn-outline btn-sm">
-                WATCH ON THE SITE
-              </Link>
-            </div>
-          </div>
-        </section>
       </main>
 
       <Footer />

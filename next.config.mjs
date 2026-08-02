@@ -25,6 +25,8 @@ const nextConfig = {
   async redirects() {
     return [
       { source: '/rss', destination: '/feed.xml', permanent: true },
+      // Video section is disabled for now. Redirect (temporary) instead of 404.
+      { source: '/videos', destination: '/', permanent: false },
     ];
   },
 };

@@ -2,6 +2,7 @@ import { groq } from 'next-sanity';
 
 const postFields = groq`
   _id,
+  _updatedAt,
   title,
   "slug": slug.current,
   cycle,

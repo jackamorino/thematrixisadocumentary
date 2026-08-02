@@ -21,10 +21,8 @@ export function Footer() {
         >
           Apple Books
         </a>
-        <a href={buyLinks.youtube} target="_blank" rel="noopener noreferrer">
-          YouTube
-        </a>
         <Link href="/blog">Blog</Link>
+        <Link href="/contact">Contact</Link>
         <Link href="/privacy">Privacy</Link>
       </div>
     </footer>

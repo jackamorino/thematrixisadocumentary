@@ -10,7 +10,7 @@ import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo';
 import { cycleLabel } from '@/lib/site';
 
 export const metadata = pageMetadata({
-  title: 'Blog',
+  title: 'Keys Left Behind: Essays on Awakening and Hidden History',
   path: '/blog',
   description:
     'Keys Left Behind: essays from The Matrix is a Documentary and beyond. The Keys do not tell you what is true. They show you the faces. One Key at a time.',
@@ -50,7 +50,7 @@ export default async function BlogPage() {
               {featured.coverImage && (
                 <Image
                   src={featured.coverImage}
-                  alt={featured.title}
+                  alt={featured.coverImageAlt ?? featured.title}
                   width={800}
                   height={420}
                   className="featured-card__img"
