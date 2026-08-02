@@ -13,8 +13,9 @@ export const siteConfig = {
   title: 'The Matrix is a Documentary',
   subtitle:
     'A Journey of Awakening, Remembering, and the Key That Frees the Soul',
+  // Kept near 150 chars: meta/OG descriptions truncate around 155-160.
   description:
-    "Jack Amorino's journey of awakening and remembering, from the classrooms that taught forgetting, through the ceremonies of Iquitos, to the Keys left behind for those ready to feel the coin in their hand.",
+    "Jack Amorino's journey of awakening and remembering: from classrooms that taught forgetting to the ceremonies of Iquitos, and the Keys left behind.",
   author: {
     name: 'Jack Amorino',
     email: 'jack.amorino@thematrixisadocumentary.com',

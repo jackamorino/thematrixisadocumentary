@@ -27,9 +27,12 @@ export function pageMetadata({
   publishedTime,
 }: PageMetaInput): Metadata {
   const url = `${SITE_URL}${path === '/' ? '' : path}`;
+  // Share titles truncate around 60 chars on most platforms, so the OG title
+  // uses the same short form as the SERP title. The full subtitle lives in the
+  // H1 and the Book JSON-LD.
   const fullTitle = title
     ? `${title} · ${siteConfig.name}`
-    : `${siteConfig.name}: ${siteConfig.subtitle}`;
+    : `${siteConfig.name}: A Book by ${siteConfig.author.name}`;
 
   return {
     // Homepage SERP title stays under ~60 chars; the full subtitle truncates
