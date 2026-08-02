@@ -3,7 +3,9 @@ import type { Metadata } from 'next';
 import { buyLinks, cycleLabel, siteConfig, SITE_URL } from './site';
 import type { Post, Video } from './types';
 
-const OG_IMAGE = '/blog-images/the-matrix-is-a-documentary-cover-web.png';
+// 1200x630 landscape share card (assets/og-image.png). The portrait book cover
+// crops badly in link previews; article pages override with their own cover.
+const OG_IMAGE = '/assets/og-image.png';
 const OG_ICON = '/assets/book-icon.png';
 
 interface PageMetaInput {
@@ -42,7 +44,11 @@ export function pageMetadata({
       siteName: siteConfig.name,
       type,
       ...(publishedTime ? { publishedTime } : {}),
-      images: [{ url: image, width: 900, height: 1350, alt: siteConfig.name }],
+      images: [
+        image === OG_IMAGE
+          ? { url: image, width: 1200, height: 630, alt: siteConfig.name }
+          : { url: image, alt: siteConfig.name },
+      ],
     },
     twitter: {
       card: 'summary_large_image',
@@ -83,7 +89,7 @@ export function bookJsonLd(): JsonLd {
     '@type': 'Book',
     name: `${siteConfig.name}: ${siteConfig.subtitle}`,
     url: `${SITE_URL}/the-book`,
-    image: `${SITE_URL}${OG_IMAGE}`,
+    image: `${SITE_URL}/blog-images/the-matrix-is-a-documentary-cover-web.png`,
     author: { '@type': 'Person', name: siteConfig.author.name },
     inLanguage: siteConfig.book.inLanguage,
     ...(siteConfig.book.isbn ? { isbn: siteConfig.book.isbn } : {}),
