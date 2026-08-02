@@ -17,13 +17,13 @@ export function Nav({ solid = false }: { solid?: boolean }) {
       </Link>
       <button
         type="button"
-        className="nav__toggle"
+        className={`burger burger-squeeze nav__burger${open ? ' open' : ''}`}
         aria-expanded={open}
         aria-controls="nav-links"
         aria-label="Toggle menu"
         onClick={() => setOpen((v) => !v)}
       >
-        ☰
+        <span className="burger-lines" />
       </button>
       <div
         id="nav-links"
