@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import { buyLinks, siteConfig, withUtm } from '@/lib/site';
+import { buyLinks, siteConfig, videosEnabled, withUtm } from '@/lib/site';
 
 export function Footer() {
   return (
@@ -21,6 +21,11 @@ export function Footer() {
         >
           Apple Books
         </a>
+        {videosEnabled && (
+          <a href={buyLinks.youtube} target="_blank" rel="noopener noreferrer">
+            YouTube
+          </a>
+        )}
         <Link href="/blog">Blog</Link>
         <Link href="/contact">Contact</Link>
         <Link href="/privacy">Privacy</Link>

@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next';
 
 import { getPosts } from '@/lib/data';
-import { SITE_URL } from '@/lib/site';
+import { SITE_URL, videosEnabled } from '@/lib/site';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const posts = await getPosts();
@@ -12,6 +12,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${SITE_URL}/the-author`, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${SITE_URL}/blog`, changeFrequency: 'weekly', priority: 0.8 },
     { url: `${SITE_URL}/contact`, changeFrequency: 'yearly', priority: 0.3 },
+    ...(videosEnabled
+      ? [
+          {
+            url: `${SITE_URL}/videos`,
+            changeFrequency: 'weekly',
+            priority: 0.6,
+          } as const,
+        ]
+      : []),
   ];
 
   const postRoutes: MetadataRoute.Sitemap = posts.map((post) => ({

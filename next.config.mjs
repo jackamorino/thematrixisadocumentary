@@ -3,6 +3,9 @@ import { fileURLToPath } from 'node:url';
 
 const projectRoot = path.dirname(fileURLToPath(import.meta.url));
 
+// Same build-time flag as src/lib/site.ts (videosEnabled). When off, /videos redirects home.
+const videosEnabled = process.env.NEXT_PUBLIC_SHOW_VIDEOS === 'true';
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -25,8 +28,10 @@ const nextConfig = {
   async redirects() {
     return [
       { source: '/rss', destination: '/feed.xml', permanent: true },
-      // Video section is disabled for now. Redirect (temporary) instead of 404.
-      { source: '/videos', destination: '/', permanent: false },
+      // While the video section is disabled, send /videos home instead of 404ing.
+      ...(videosEnabled
+        ? []
+        : [{ source: '/videos', destination: '/', permanent: false }]),
     ];
   },
 };

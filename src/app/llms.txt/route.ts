@@ -1,5 +1,5 @@
 import { getPosts } from '@/lib/data';
-import { buyLinks, siteConfig, SITE_URL } from '@/lib/site';
+import { buyLinks, siteConfig, SITE_URL, videosEnabled } from '@/lib/site';
 
 /**
  * GEO: llms.txt gives AI answer engines a plain-text map of the site
@@ -14,20 +14,28 @@ export async function GET() {
     (p) => `- [${p.title}](${SITE_URL}/blog/${p.slug}): ${p.excerpt}`
   );
 
+  // Video / YouTube references only when the section is enabled.
+  const youtubeNote = videosEnabled
+    ? ` The companion YouTube channel is Decode The Real (${buyLinks.youtube}).`
+    : '';
+  const videosPageLine = videosEnabled
+    ? `\n- [Videos: Decode The Real](${SITE_URL}/videos): the book's themes explored on YouTube`
+    : '';
+
   const text = `# ${siteConfig.name}
 
 > Author site for the book "${siteConfig.name}: ${siteConfig.subtitle}" by ${siteConfig.author.name}. The book pairs a first-person awakening narrative (a Catholic childhood, immigrant years in Boston, Ayahuasca ceremonies in Iquitos) with 27 short "Keys" in three Cycles: Cracks in the World, Hidden Histories, and The Inner Cages, closing with The Key of Love.
 
 Important context: the Keys and the blog essays are explorations and interpretations, not claims of settled fact. The framing is the Coin: "The Keys do not tell you what is true. They show you the faces. Your task is to feel the coin in your hand."
 
-The blog, "Keys Left Behind," continues the book's three themes as standalone essays. The companion YouTube channel is Decode The Real (https://www.youtube.com/@DecodeTheReal).
+The blog, "Keys Left Behind," continues the book's three themes as standalone essays.${youtubeNote}
 
 ## Pages
 
 - [The Book](${SITE_URL}/the-book): what is inside, the three Prologue questions, formats and where to buy
 - [The Author](${SITE_URL}/the-author): who Jack Amorino is, in his own words
 - [Blog: Keys Left Behind](${SITE_URL}/blog): essays on the book's three themes
-- [Read the beginning free](${SITE_URL}/#signup): the Prologue and Chapter One in exchange for an email
+- [Read the beginning free](${SITE_URL}/#signup): the Prologue and Chapter One in exchange for an email${videosPageLine}
 
 ## Blog posts
 

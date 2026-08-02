@@ -5,11 +5,12 @@ import { BuyButtons } from '@/components/BuyButtons';
 import { EmailCapture } from '@/components/EmailCapture';
 import { Footer } from '@/components/Footer';
 import { JsonLd } from '@/components/JsonLd';
+import { LiteYouTube } from '@/components/LiteYouTube';
 import { Nav } from '@/components/Nav';
 import { PostCard } from '@/components/PostCard';
-import { getPosts, getSiteSettings } from '@/lib/data';
+import { getPosts, getSiteSettings, getVideos } from '@/lib/data';
 import { bookJsonLd, faqJsonLd, pageMetadata, websiteJsonLd } from '@/lib/seo';
-import { siteConfig } from '@/lib/site';
+import { siteConfig, videosEnabled } from '@/lib/site';
 
 export const metadata = pageMetadata({ path: '/' });
 export const revalidate = 60;
@@ -39,6 +40,7 @@ export default async function HomePage() {
   ]);
 
   const previewPosts = posts.slice(0, 3);
+  const bandVideos = videosEnabled ? (await getVideos()).slice(0, 3) : [];
 
   return (
     <>
@@ -170,6 +172,33 @@ export default async function HomePage() {
             ))}
           </div>
         </section>
+
+        {/* Decode The Real band (gated by NEXT_PUBLIC_SHOW_VIDEOS) */}
+        {videosEnabled && bandVideos.length > 0 && (
+          <section className="section section--yt" aria-labelledby="yt-title">
+            <div className="section__head-row">
+              <div>
+                <p className="eyebrow">ON YOUTUBE</p>
+                <h2 className="section-title" id="yt-title" style={{ fontSize: 'clamp(26px,3vw,36px)' }}>
+                  Decode The Real
+                </h2>
+              </div>
+              <Link href="/videos" className="text-link">
+                All videos →
+              </Link>
+            </div>
+            <div className="grid-auto-sm">
+              {bandVideos.map((video) => (
+                <div className="video-card" key={video._id}>
+                  <LiteYouTube id={video.youtubeId} title={video.title} />
+                  <div className="video-card__body">
+                    <div className="video-card__title">{video.title}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
 
         {/* Blog preview */}
         <section className="section" aria-labelledby="blog-title">

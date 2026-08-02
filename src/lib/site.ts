@@ -38,11 +38,20 @@ export const buyLinks = {
   youtube: process.env.NEXT_PUBLIC_YOUTUBE_URL || 'https://www.youtube.com/@DecodeTheReal',
 } as const;
 
-export const navLinks = [
+/**
+ * Master switch for the whole video / Decode The Real section (nav item, footer
+ * YouTube link, homepage band, author cross-promo, /videos route, sitemap + JSON-LD).
+ * Build-time so it reaches client components (Nav) and next.config. Flip
+ * NEXT_PUBLIC_SHOW_VIDEOS=true in the env (and redeploy) to turn everything on.
+ */
+export const videosEnabled = process.env.NEXT_PUBLIC_SHOW_VIDEOS === 'true';
+
+export const navLinks: { href: string; label: string }[] = [
   { href: '/the-book', label: 'The Book' },
   { href: '/the-author', label: 'The Author' },
   { href: '/blog', label: 'Blog' },
-] as const;
+  ...(videosEnabled ? [{ href: '/videos', label: 'Videos' }] : []),
+];
 
 /**
  * Theme taxonomy — the values still match the Sanity `cycle` enum (cycle1..3), but the
