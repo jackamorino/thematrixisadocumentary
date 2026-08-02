@@ -34,10 +34,10 @@ export const metadata: Metadata = {
     follow: true,
     googleBot: { index: true, follow: true, 'max-image-preview': 'large' },
   },
-  // Favicon comes from src/app/icon.svg (small, crisp). Apple touch icon uses the
-  // square book art.
+  // Favicon + Apple touch icon: the author-supplied 500x500 mark.
   icons: {
-    apple: '/assets/book-icon.png',
+    icon: '/assets/favicon.png',
+    apple: '/assets/favicon.png',
   },
   alternates: {
     canonical: SITE_URL,
