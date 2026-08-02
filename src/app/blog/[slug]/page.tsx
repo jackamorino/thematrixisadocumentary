@@ -140,7 +140,8 @@ export default async function ArticlePage({
             />
             <div className="cta-card__copy">
               <p className="cta-card__title">
-                This Key is one of twenty-seven left behind in the book.
+                The Keys run deeper in the book: twenty-seven of them, in
+                three Cycles, left behind for those ready to go further.
               </p>
               <div className="btn-row" style={{ marginTop: 18 }}>
                 <a
