@@ -13,7 +13,7 @@ export const metadata = pageMetadata({
   title: 'Blog',
   path: '/blog',
   description:
-    'Keys Left Behind — essays from The Matrix is a Documentary and beyond. The Keys do not tell you what is true. They show you the faces. One Key at a time.',
+    'Keys Left Behind: essays from The Matrix is a Documentary and beyond. The Keys do not tell you what is true. They show you the faces. One Key at a time.',
 });
 export const revalidate = 60;
 
@@ -40,7 +40,7 @@ export default async function BlogPage() {
           </h1>
           <p className="lead" style={{ fontSize: 'clamp(17px,1.8vw,20px)', maxWidth: 600, margin: '16px auto 0' }}>
             The Keys do not tell you what is true. They show you the faces. Essays
-            from the book and beyond — one Key at a time.
+            from the book and beyond, one Key at a time.
           </p>
         </header>
 

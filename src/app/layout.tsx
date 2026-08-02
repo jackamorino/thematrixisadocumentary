@@ -11,8 +11,8 @@ import './globals.css';
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: `${siteConfig.name} — ${siteConfig.subtitle}`,
-    template: `%s — ${siteConfig.name}`,
+    default: `${siteConfig.name}: ${siteConfig.subtitle}`,
+    template: `%s · ${siteConfig.name}`,
   },
   description: siteConfig.description,
   applicationName: siteConfig.name,
@@ -32,8 +32,9 @@ export const metadata: Metadata = {
     follow: true,
     googleBot: { index: true, follow: true, 'max-image-preview': 'large' },
   },
+  // Favicon comes from src/app/icon.svg (small, crisp). Apple touch icon uses the
+  // square book art.
   icons: {
-    icon: '/assets/book-icon.png',
     apple: '/assets/book-icon.png',
   },
   alternates: {

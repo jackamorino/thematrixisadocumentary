@@ -25,7 +25,7 @@ export function LiteYouTube({ id, title, large = false }: LiteYouTubeProps) {
         target="_blank"
         rel="noopener noreferrer"
         className="video-thumb"
-        aria-label={`${title} — watch on YouTube`}
+        aria-label={`${title}, watch on YouTube`}
       >
         <span className={`video-thumb__play${large ? ' video-thumb__play--lg' : ''}`}>▶</span>
       </a>

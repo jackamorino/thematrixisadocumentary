@@ -25,6 +25,7 @@ export function Footer() {
           YouTube
         </a>
         <Link href="/blog">Blog</Link>
+        <Link href="/privacy">Privacy</Link>
       </div>
     </footer>
   );

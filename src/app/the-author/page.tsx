@@ -121,7 +121,7 @@ export default async function TheAuthorPage() {
               Decode The Real
             </h2>
             <p className="split-hero__para" style={{ color: 'var(--text-70)' }}>
-              The remembering continues on YouTube — where Jack keeps turning the
+              The remembering continues on YouTube, where Jack keeps turning the
               Keys, one video at a time.
             </p>
             <div className="btn-row" style={{ marginTop: 28 }}>

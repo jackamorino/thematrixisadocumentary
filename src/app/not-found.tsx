@@ -13,7 +13,7 @@ export default function NotFound() {
           This page has been forgotten
         </h1>
         <p className="lead" style={{ fontSize: 20, maxWidth: 480, margin: '16px auto 28px' }}>
-          The thread that guides you out is love — but this door leads nowhere.
+          The thread that guides you out is love, but this door leads nowhere.
           Let&rsquo;s find your way back.
         </p>
         <div className="btn-row btn-row--center">

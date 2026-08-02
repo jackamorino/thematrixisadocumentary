@@ -58,7 +58,7 @@ export default async function HomePage() {
           </p>
           <Image
             src="/assets/cover.png"
-            alt="The Matrix is a Documentary — book cover"
+            alt="The Matrix is a Documentary book cover"
             width={400}
             height={600}
             priority
@@ -105,7 +105,7 @@ export default async function HomePage() {
               Keys Left Behind
             </h2>
             <p className="lead" style={{ fontSize: 20, maxWidth: 600, margin: '16px auto 0' }}>
-              Three Cycles of Keys — Cracks in the World, Hidden Histories, The
+              Three Cycles of Keys: Cracks in the World, Hidden Histories, The
               Inner Cages. The Keys do not tell you what is true. They show you
               the faces. Your task is to feel the coin in your hand.
             </p>
@@ -126,7 +126,7 @@ export default async function HomePage() {
                 <h3 className="key-card__title">The Coin</h3>
                 <p className="key-card__text">
                   One face says true. The other says false. Both faces exist only
-                  because the coin itself is real — the metal, the weight, the
+                  because the coin itself is real. The metal, the weight, the
                   thing beneath.
                 </p>
               </div>
@@ -146,7 +146,7 @@ export default async function HomePage() {
                 <h3 className="key-card__title">The Key of Love</h3>
                 <p className="key-card__text">
                   All cages are made of fear, and every shadow dissolves in light.
-                  Love is the Key — all others unlock doors, but this one unlocks
+                  Love is the Key. All others unlock doors, but this one unlocks
                   you.
                 </p>
               </div>

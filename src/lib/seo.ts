@@ -26,11 +26,11 @@ export function pageMetadata({
 }: PageMetaInput): Metadata {
   const url = `${SITE_URL}${path === '/' ? '' : path}`;
   const fullTitle = title
-    ? `${title} — ${siteConfig.name}`
-    : `${siteConfig.name} — ${siteConfig.subtitle}`;
+    ? `${title} · ${siteConfig.name}`
+    : `${siteConfig.name}: ${siteConfig.subtitle}`;
 
   return {
-    title: title || `${siteConfig.name} — ${siteConfig.subtitle}`,
+    title: title || `${siteConfig.name}: ${siteConfig.subtitle}`,
     description,
     alternates: { canonical: url },
     openGraph: {

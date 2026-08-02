@@ -112,7 +112,7 @@ export default async function ArticlePage({
           <div className="cta-card">
             <Image
               src="/assets/cover.png"
-              alt="The Matrix is a Documentary — book cover"
+              alt="The Matrix is a Documentary book cover"
               width={110}
               height={165}
               className="cta-card__cover"

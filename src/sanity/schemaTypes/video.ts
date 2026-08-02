@@ -20,14 +20,14 @@ export const video = defineType({
     }),
     defineField({
       name: 'cycle',
-      title: 'Cycle',
+      title: 'Theme',
       type: 'string',
       options: {
         list: [
-          { title: 'Cycle I · Cracks in the World', value: 'cycle1' },
-          { title: 'Cycle II · Hidden Histories', value: 'cycle2' },
-          { title: 'Cycle III · The Inner Cages', value: 'cycle3' },
-          { title: 'The Last Key', value: 'lastKey' },
+          { title: 'Cracks in the World', value: 'cycle1' },
+          { title: 'Hidden Histories', value: 'cycle2' },
+          { title: 'The Inner Cages', value: 'cycle3' },
+          { title: 'The Key of Love', value: 'lastKey' },
         ],
       },
     }),

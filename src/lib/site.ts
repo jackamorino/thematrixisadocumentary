@@ -14,7 +14,7 @@ export const siteConfig = {
   subtitle:
     'A Journey of Awakening, Remembering, and the Key That Frees the Soul',
   description:
-    "Jack Amorino's journey of awakening and remembering — from the classrooms that taught forgetting, through the ceremonies of Iquitos, to the Keys left behind for those ready to feel the coin in their hand.",
+    "Jack Amorino's journey of awakening and remembering, from the classrooms that taught forgetting, through the ceremonies of Iquitos, to the Keys left behind for those ready to feel the coin in their hand.",
   author: {
     name: 'Jack Amorino',
     email: 'jack.amorino@thematrixisadocumentary.com',
@@ -45,12 +45,16 @@ export const navLinks = [
   { href: '/videos', label: 'Videos' },
 ] as const;
 
-/** Cycle taxonomy — matches the Sanity `cycle` enum and the manuscript's structure. */
+/**
+ * Theme taxonomy — the values still match the Sanity `cycle` enum (cycle1..3), but the
+ * public labels are plain theme names: blog readers arriving from search shouldn't need
+ * the book's Cycle numbering to understand the categories.
+ */
 export const cycles = {
-  cycle1: 'Cycle I · Cracks in the World',
-  cycle2: 'Cycle II · Hidden Histories',
-  cycle3: 'Cycle III · The Inner Cages',
-  lastKey: 'The Last Key',
+  cycle1: 'Cracks in the World',
+  cycle2: 'Hidden Histories',
+  cycle3: 'The Inner Cages',
+  lastKey: 'The Key of Love',
 } as const;
 
 export type CycleKey = keyof typeof cycles;

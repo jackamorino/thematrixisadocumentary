@@ -10,7 +10,7 @@ export const metadata = pageMetadata({
   title: 'Videos',
   path: '/videos',
   description:
-    'Decode The Real — the remembering continues on YouTube, turning the Keys one video at a time.',
+    'Decode The Real: the remembering continues on YouTube, turning the Keys one video at a time.',
 });
 export const revalidate = 60;
 
@@ -50,7 +50,7 @@ export default async function VideosPage() {
             Decode The Real
           </h1>
           <p className="lead" style={{ fontSize: 'clamp(17px,1.8vw,20px)', maxWidth: 560, margin: '16px auto 0' }}>
-            The remembering continues on YouTube — turning the Keys, one video at a
+            The remembering continues on YouTube, turning the Keys, one video at a
             time.
           </p>
           <a

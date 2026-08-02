@@ -16,7 +16,7 @@ export const metadata = pageMetadata({
   title: 'The Book',
   path: '/the-book',
   description:
-    'This book is a story. It is also a mirror. A journey of awakening, remembering, and the Key that frees the soul — twenty-seven Keys in three Cycles, closing with the Key of Love.',
+    'This book is a story. It is also a mirror. A journey of awakening, remembering, and the Key that frees the soul. Twenty-seven Keys in three Cycles, closing with the Key of Love.',
 });
 
 const QUESTIONS = [
@@ -47,7 +47,7 @@ export default function TheBookPage() {
         <section className="split-hero split-hero--left">
           <Image
             src="/assets/cover.png"
-            alt="The Matrix is a Documentary — book cover"
+            alt="The Matrix is a Documentary book cover"
             width={380}
             height={570}
             priority
@@ -113,7 +113,7 @@ export default function TheBookPage() {
               <div className="inside-card__body">
                 <h3 className="inside-card__title">The Journey</h3>
                 <p className="inside-card__text">
-                  Ten chapters and the interludes between them — Jack&rsquo;s path
+                  Ten chapters and the interludes between them: Jack&rsquo;s path
                   from a too-tall chair in catechism, through Boston&rsquo;s grey
                   mornings, to the ceremonies of Iquitos and the remembering that
                   followed.
@@ -125,7 +125,7 @@ export default function TheBookPage() {
               <div className="inside-card__body">
                 <h3 className="inside-card__title">Eterno Speaks</h3>
                 <p className="inside-card__text">
-                  Jack&rsquo;s Higher Self — the compass of his ceremonies, the
+                  Jack&rsquo;s Higher Self, the compass of his ceremonies, the
                   voice of memory itself. When Eterno speaks, pause. Feel the space
                   between your thoughts. That is where the real story lives.
                 </p>
@@ -136,8 +136,8 @@ export default function TheBookPage() {
               <div className="inside-card__body">
                 <h3 className="inside-card__title">Keys Left Behind</h3>
                 <p className="inside-card__text">
-                  Twenty-seven Keys in three Cycles — Cracks in the World, Hidden
-                  Histories, The Inner Cages — closing with the Key of Love: the
+                  Twenty-seven Keys in three Cycles (Cracks in the World, Hidden
+                  Histories, The Inner Cages), closing with the Key of Love: the
                   one that was always in your pocket.
                 </p>
               </div>
