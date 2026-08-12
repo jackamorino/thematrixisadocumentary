@@ -1,5 +1,6 @@
 import Link from 'next/link';
 
+import { CookiePreferencesLink } from '@/components/CookiePreferencesLink';
 import { buyLinks, siteConfig, videosEnabled, withUtm } from '@/lib/site';
 
 export function Footer() {
@@ -29,6 +30,7 @@ export function Footer() {
         <Link href="/blog">Blog</Link>
         <Link href="/contact">Contact</Link>
         <Link href="/privacy">Privacy</Link>
+        <CookiePreferencesLink />
       </div>
     </footer>
   );

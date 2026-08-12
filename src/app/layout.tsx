@@ -1,10 +1,14 @@
 import type { Metadata, Viewport } from 'next';
 import Script from 'next/script';
 
+import { Analytics } from '@/components/Analytics';
+import { CookieConsentBanner } from '@/components/CookieConsentBanner';
 import { JsonLd } from '@/components/JsonLd';
 import { cinzel, crimsonPro } from '@/lib/fonts';
 import { websiteJsonLd } from '@/lib/seo';
 import { siteConfig, SITE_URL } from '@/lib/site';
+
+const GA_MEASUREMENT_ID = 'G-H0BCJDZ2H9';
 
 import './globals.css';
 
@@ -72,20 +76,9 @@ export default function RootLayout({
             strategy="afterInteractive"
           />
         )}
-        {/* Google Analytics (gtag.js) */}
-        <Script
-          async
-          src="https://www.googletagmanager.com/gtag/js?id=G-H0BCJDZ2H9"
-          strategy="afterInteractive"
-        />
-        <Script id="gtag-init" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-H0BCJDZ2H9');
-          `}
-        </Script>
+        {/* Google Analytics (gtag.js), loads only after analytics consent */}
+        <Analytics measurementId={GA_MEASUREMENT_ID} />
+        <CookieConsentBanner />
       </body>
     </html>
   );

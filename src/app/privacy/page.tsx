@@ -73,9 +73,14 @@ export default function PrivacyPage() {
             Cookies and analytics
           </h2>
           <p>
-            The site uses only what it needs to function, plus privacy-respecting
-            analytics to understand which pages are read. We do not sell your
-            data, and we do not share it except with the providers named above.
+            The site uses strictly necessary cookies to function, and Google
+            Analytics to understand which pages are read. Analytics cookies are
+            optional: in the EU, UK, and Switzerland they stay off until you
+            accept, and everywhere you can reject or change your choice at any
+            time via the Cookie preferences link in the footer. If your browser
+            sends a Global Privacy Control signal, analytics stays off
+            automatically. We do not sell your data, and we do not share it
+            except with the providers named above.
           </p>
 
           <h2 className="inside-card__title" style={{ margin: '28px 0 8px' }}>
