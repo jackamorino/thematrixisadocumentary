@@ -15,23 +15,23 @@ const postFields = groq`
 `;
 
 export const allPostsQuery = groq`
-  *[_type == "post" && defined(slug.current)] | order(publishedAt desc) {
+  *[_type == "post" && defined(slug.current) && publishedAt <= now()] | order(publishedAt desc) {
     ${postFields}
   }
 `;
 
 export const postBySlugQuery = groq`
-  *[_type == "post" && slug.current == $slug][0] {
+  *[_type == "post" && slug.current == $slug && publishedAt <= now()][0] {
     ${postFields}
   }
 `;
 
 export const postSlugsQuery = groq`
-  *[_type == "post" && defined(slug.current)].slug.current
+  *[_type == "post" && defined(slug.current) && publishedAt <= now()].slug.current
 `;
 
 export const relatedPostsQuery = groq`
-  *[_type == "post" && slug.current != $slug && defined(slug.current)]
+  *[_type == "post" && slug.current != $slug && defined(slug.current) && publishedAt <= now()]
     | order(publishedAt desc)[0...3] {
     ${postFields}
   }
