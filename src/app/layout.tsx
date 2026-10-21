@@ -24,15 +24,8 @@ export const metadata: Metadata = {
   applicationName: siteConfig.name,
   authors: [{ name: siteConfig.author.name }],
   creator: siteConfig.author.name,
-  keywords: [
-    'The Matrix is a Documentary',
-    'Jack Amorino',
-    'awakening',
-    'remembering',
-    'Keys Left Behind',
-    'Decode The Real',
-    'spiritual awakening book',
-  ],
+  // meta keywords intentionally omitted: Google ignores them and identical keywords
+  // across pages can read as a spam signal to Bing.
   robots: {
     index: true,
     follow: true,

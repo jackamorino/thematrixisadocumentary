@@ -9,7 +9,7 @@ import { LiteYouTube } from '@/components/LiteYouTube';
 import { Nav } from '@/components/Nav';
 import { PostCard } from '@/components/PostCard';
 import { getPosts, getSiteSettings, getVideos } from '@/lib/data';
-import { bookJsonLd, faqJsonLd, pageMetadata, websiteJsonLd } from '@/lib/seo';
+import { bookJsonLd, pageMetadata } from '@/lib/seo';
 import { siteConfig, videosEnabled } from '@/lib/site';
 
 export const metadata = pageMetadata({ path: '/' });
@@ -44,13 +44,15 @@ export default async function HomePage() {
 
   return (
     <>
-      <JsonLd
-        data={[websiteJsonLd(), bookJsonLd(), faqJsonLd(PROLOGUE_QUESTIONS)]}
-      />
+      {/* WebSite + Organization JSON-LD comes from the root layout; Book is page-level. */}
+      <JsonLd data={bookJsonLd()} />
 
       <div className="home-hero">
         <Nav />
         <div className="home-hero__inner">
+          <h1 className="visually-hidden">
+            {siteConfig.name}: {siteConfig.subtitle}
+          </h1>
           <p className="home-hero__prologue">
             &ldquo;The Matrix isn&rsquo;t just a movie. It&rsquo;s the world&rsquo;s
             oldest confession, dressed as fiction.&rdquo;

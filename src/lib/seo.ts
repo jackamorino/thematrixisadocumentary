@@ -64,25 +64,69 @@ export function pageMetadata({
 
 type JsonLd = Record<string, unknown>;
 
+/** The publishing entity. Used as `publisher` on WebSite, Book, and Articles. */
+export function organizationJsonLd(): JsonLd {
+  return {
+    '@type': 'Organization',
+    name: siteConfig.name,
+    url: SITE_URL,
+    logo: {
+      '@type': 'ImageObject',
+      url: `${SITE_URL}${OG_IMAGE}`,
+      width: 1200,
+      height: 630,
+    },
+  };
+}
+
 export function websiteJsonLd(): JsonLd {
   return {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     name: siteConfig.name,
     url: SITE_URL,
+    description: `The official site for ${siteConfig.name} by ${siteConfig.author.name}: a journey of awakening, remembering, and the Keys left behind.`,
     inLanguage: siteConfig.book.inLanguage,
+    publisher: organizationJsonLd(),
     author: personJsonLd(),
   };
 }
 
-export function personJsonLd(): JsonLd {
+export function personJsonLd(opts: { image?: string } = {}): JsonLd {
   return {
     '@context': 'https://schema.org',
     '@type': 'Person',
     name: siteConfig.author.name,
     url: `${SITE_URL}/the-author`,
     jobTitle: 'Author',
+    description: `Author of ${siteConfig.name}. A journey of awakening, remembering, and the Keys left behind.`,
+    knowsAbout: [
+      'Spiritual Awakening',
+      'Consciousness',
+      'Hidden History',
+      'Ayahuasca Ceremonies',
+    ],
+    ...(opts.image ? { image: opts.image } : {}),
+    // Phase 3 (E-E-A-T): append Amazon Author Central, Goodreads, and social URLs
+    // here as they are created.
     sameAs: [buyLinks.youtube],
+    mainEntityOfPage: `${SITE_URL}/the-author`,
+  };
+}
+
+/** CollectionPage for listing pages like /blog. */
+export function collectionPageJsonLd(opts: {
+  name: string;
+  description: string;
+  path: string;
+}): JsonLd {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: opts.name,
+    description: opts.description,
+    url: `${SITE_URL}${opts.path}`,
+    isPartOf: { '@type': 'WebSite', name: siteConfig.name, url: SITE_URL },
   };
 }
 
@@ -91,12 +135,30 @@ export function bookJsonLd(): JsonLd {
     '@context': 'https://schema.org',
     '@type': 'Book',
     name: `${siteConfig.name}: ${siteConfig.subtitle}`,
+    alternateName: `${siteConfig.name}: A Book by ${siteConfig.author.name}`,
     url: `${SITE_URL}/the-book`,
     image: `${SITE_URL}/blog-images/the-matrix-is-a-documentary-cover-web.png`,
-    author: { '@type': 'Person', name: siteConfig.author.name },
+    author: {
+      '@type': 'Person',
+      name: siteConfig.author.name,
+      url: `${SITE_URL}/the-author`,
+    },
     inLanguage: siteConfig.book.inLanguage,
     ...(siteConfig.book.isbn ? { isbn: siteConfig.book.isbn } : {}),
-    bookFormat: 'https://schema.org/Paperback',
+    bookFormat: [
+      'https://schema.org/Paperback',
+      'https://schema.org/Hardcover',
+      'https://schema.org/EBook',
+    ],
+    genre: ['Spirituality', 'Awakening', 'Memoir', 'Philosophy'],
+    about: [
+      { '@type': 'Thing', name: 'Spiritual Awakening' },
+      { '@type': 'Thing', name: 'Consciousness' },
+      { '@type': 'Thing', name: 'Ayahuasca' },
+      { '@type': 'Thing', name: 'Hidden History' },
+    ],
+    datePublished: '2026',
+    publisher: organizationJsonLd(),
     abstract: siteConfig.description,
     offers: [
       {

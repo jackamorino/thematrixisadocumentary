@@ -6,7 +6,7 @@ import { Footer } from '@/components/Footer';
 import { JsonLd } from '@/components/JsonLd';
 import { Nav } from '@/components/Nav';
 import { getPosts } from '@/lib/data';
-import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo';
+import { breadcrumbJsonLd, collectionPageJsonLd, pageMetadata } from '@/lib/seo';
 import { cycleLabel } from '@/lib/site';
 
 export const metadata = pageMetadata({
@@ -25,10 +25,18 @@ export default async function BlogPage() {
   return (
     <>
       <JsonLd
-        data={breadcrumbJsonLd([
-          { name: 'Home', path: '/' },
-          { name: 'Blog', path: '/blog' },
-        ])}
+        data={[
+          collectionPageJsonLd({
+            name: 'Keys Left Behind: Essays on Awakening and Hidden History',
+            description:
+              'Blog essays exploring cracks in the world, hidden histories, and the inner cages: companion pieces to The Matrix is a Documentary.',
+            path: '/blog',
+          }),
+          breadcrumbJsonLd([
+            { name: 'Home', path: '/' },
+            { name: 'Blog', path: '/blog' },
+          ]),
+        ]}
       />
       <Nav solid />
 

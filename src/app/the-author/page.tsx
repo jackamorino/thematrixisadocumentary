@@ -13,7 +13,7 @@ export const metadata = pageMetadata({
   path: '/the-author',
   description:
     'Jack Amorino is not just a name, but a mirror. His journey through Aya’s visions and the Keys reflects the path many walk in silence: questioning, remembering, awakening.',
-  image: '/assets/book-icon.png',
+  // Uses the site-wide 1200x630 og-image (the book-icon rendered poorly in previews).
 });
 export const revalidate = 60;
 
@@ -24,7 +24,7 @@ export default async function TheAuthorPage() {
     <>
       <JsonLd
         data={[
-          personJsonLd(),
+          personJsonLd(author.photo ? { image: author.photo } : {}),
           breadcrumbJsonLd([
             { name: 'Home', path: '/' },
             { name: 'The Author', path: '/the-author' },
