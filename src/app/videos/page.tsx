@@ -7,6 +7,7 @@ import { Nav } from '@/components/Nav';
 import { getVideos } from '@/lib/data';
 import { breadcrumbJsonLd, pageMetadata, videoJsonLd } from '@/lib/seo';
 import { buyLinks, cycleLabel, socialLinks, videosEnabled } from '@/lib/site';
+import { getLatestShorts } from '@/lib/youtube';
 
 export const metadata = pageMetadata({
   title: 'Videos',
@@ -21,17 +22,26 @@ export default async function VideosPage() {
   // redirected in next.config; the guard here is the belt-and-suspenders.
   if (!videosEnabled) redirect('/');
 
-  const videos = await getVideos();
-  const shorts = videos.filter((v) => v.format === 'short');
+  // Long-form videos come from Sanity (manual); Shorts auto-sync from YouTube's feed.
+  const [videos, shorts] = await Promise.all([getVideos(), getLatestShorts()]);
   const standard = videos.filter((v) => v.format !== 'short');
   const featured = standard.find((v) => v.featured) ?? standard[0];
   const rest = featured
     ? standard.filter((v) => v._id !== featured._id)
     : standard;
 
-  const videoLd = videos
-    .map((v) => videoJsonLd(v))
-    .filter((x): x is Record<string, unknown> => Boolean(x));
+  const videoLd = [
+    ...standard.map((v) => videoJsonLd(v)),
+    ...shorts.map((s) =>
+      videoJsonLd({
+        _id: s.id,
+        title: s.title,
+        youtubeId: s.id,
+        cycle: 'cycle1',
+        publishedAt: s.publishedAt,
+      })
+    ),
+  ].filter((x): x is Record<string, unknown> => Boolean(x));
 
   return (
     <>
@@ -135,11 +145,11 @@ export default async function VideosPage() {
               </a>
             </div>
             <div className="grid-shorts">
-              {shorts.map((video) => (
-                <div className="video-card" key={video._id}>
-                  <LiteYouTube id={video.youtubeId} title={video.title} short />
+              {shorts.map((short) => (
+                <div className="video-card" key={short.id}>
+                  <LiteYouTube id={short.id} title={short.title} short />
                   <div className="video-card__body">
-                    <div className="video-card__title">{video.title}</div>
+                    <div className="video-card__title">{short.title}</div>
                   </div>
                 </div>
               ))}
@@ -147,7 +157,7 @@ export default async function VideosPage() {
           </section>
         )}
 
-        {videos.length === 0 && (
+        {shorts.length === 0 && standard.length === 0 && (
           <section className="section center" aria-live="polite">
             <p className="lead" style={{ fontSize: 20, maxWidth: 560, margin: '0 auto' }}>
               The first Shorts are on their way. Subscribe on YouTube to be there
