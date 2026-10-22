@@ -94,21 +94,23 @@ export default async function VideosPage() {
           </section>
         )}
 
-        <section
-          className="grid-fill"
-          style={{ padding: 'clamp(32px,5vw,56px) clamp(20px,6vw,100px) clamp(48px,7vw,80px)' }}
-          aria-label="All videos"
-        >
-          {rest.map((video) => (
-            <div className="video-card" key={video._id}>
-              <LiteYouTube id={video.youtubeId} title={video.title} />
-              <div className="video-card__body">
-                <div className="video-card__title">{video.title}</div>
-                <div className="video-card__cat">{cycleLabel(video.cycle)}</div>
+        {rest.length > 0 && (
+          <section
+            className="grid-fill"
+            style={{ padding: 'clamp(32px,5vw,56px) clamp(20px,6vw,100px) clamp(48px,7vw,80px)' }}
+            aria-label="All videos"
+          >
+            {rest.map((video) => (
+              <div className="video-card" key={video._id}>
+                <LiteYouTube id={video.youtubeId} title={video.title} />
+                <div className="video-card__body">
+                  <div className="video-card__title">{video.title}</div>
+                  <div className="video-card__cat">{cycleLabel(video.cycle)}</div>
+                </div>
               </div>
-            </div>
-          ))}
-        </section>
+            ))}
+          </section>
+        )}
 
         {shorts.length > 0 && (
           <section
@@ -142,6 +144,15 @@ export default async function VideosPage() {
                 </div>
               ))}
             </div>
+          </section>
+        )}
+
+        {videos.length === 0 && (
+          <section className="section center" aria-live="polite">
+            <p className="lead" style={{ fontSize: 20, maxWidth: 560, margin: '0 auto' }}>
+              The first Shorts are on their way. Subscribe on YouTube to be there
+              when the Keys start turning.
+            </p>
           </section>
         )}
       </main>

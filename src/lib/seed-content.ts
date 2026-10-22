@@ -70,60 +70,9 @@ The Keys wait in the book. This is where the turning begins.`,
   },
 ];
 
-export const seedVideos: Video[] = [
-  {
-    _id: 'seed-video-predictive-screen',
-    title: 'The Predictive Screen — not prophecy, but programming',
-    youtubeId: '',
-    cycle: 'cycle1',
-    featured: true,
-    publishedAt: '2026-01-06',
-  },
-  {
-    _id: 'seed-video-timekeepers',
-    title: 'The Timekeepers — time itself is the Matrix',
-    youtubeId: '',
-    cycle: 'cycle2',
-    publishedAt: '2026-01-05',
-  },
-  {
-    _id: 'seed-video-language-trap',
-    title: 'The Language Trap: which words are speaking you?',
-    youtubeId: '',
-    cycle: 'cycle3',
-    format: 'short',
-    publishedAt: '2026-01-04',
-  },
-  {
-    _id: 'seed-video-schools',
-    title: 'The Schools of Forgetting',
-    youtubeId: '',
-    cycle: 'cycle3',
-    publishedAt: '2026-01-03',
-  },
-  {
-    _id: 'seed-video-ritual-moon',
-    title: 'The Ritual of the Moon',
-    youtubeId: '',
-    cycle: 'cycle1',
-    format: 'short',
-    publishedAt: '2026-01-02',
-  },
-  {
-    _id: 'seed-video-volunteers',
-    title: 'The Volunteers — trap, or mission?',
-    youtubeId: '',
-    cycle: 'cycle3',
-    publishedAt: '2026-01-01',
-  },
-  {
-    _id: 'seed-video-key-of-love',
-    title: 'The Key of Love — the one they could not take',
-    youtubeId: '',
-    cycle: 'lastKey',
-    publishedAt: '2025-12-31',
-  },
-];
+// No seed/placeholder videos. Real videos (Shorts especially) are authored in Sanity;
+// until then the video section renders a "coming soon" state rather than fake content.
+export const seedVideos: Video[] = [];
 
 export const seedAuthor: AuthorInfo = {
   name: 'Jack Amorino',
