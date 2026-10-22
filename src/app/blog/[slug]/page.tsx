@@ -6,8 +6,10 @@ import { Footer } from '@/components/Footer';
 import { JsonLd } from '@/components/JsonLd';
 import { Nav } from '@/components/Nav';
 import { PostCard } from '@/components/PostCard';
+import { Toc } from '@/components/Toc';
 import { Verse } from '@/components/Verse';
 import { getPost, getPostSlugs, getRelatedPosts } from '@/lib/data';
+import { extractHeadings, headingIdMap } from '@/lib/toc';
 import {
   articleJsonLd,
   breadcrumbJsonLd,
@@ -50,6 +52,10 @@ export default async function ArticlePage({
   if (!post) notFound();
 
   const related = await getRelatedPosts(slug);
+
+  // Table of contents from the post's h2/h3 headings (CMS posts only; shown when 2+).
+  const headings = extractHeadings(post.body);
+  const headingIds = headingIdMap(headings);
 
   // Freshness signal: surface "Updated" only when the post was meaningfully
   // revised after publication (> 7 days), so routine tweaks stay invisible.
@@ -116,7 +122,8 @@ export default async function ArticlePage({
 
         {/* Body */}
         <article className="article-body">
-          <Verse verse={post.verse} body={post.body} />
+          {headings.length >= 2 && <Toc headings={headings} />}
+          <Verse verse={post.verse} body={post.body} headingIds={headingIds} />
 
           {/* Pull quote */}
           <div className="pull-quote">

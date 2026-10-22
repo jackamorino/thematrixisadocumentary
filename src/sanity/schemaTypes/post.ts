@@ -65,6 +65,10 @@ export const post = defineType({
           type: 'block',
           styles: [
             { title: 'Normal', value: 'normal' },
+            // h2/h3 become section headings and auto-populate the post's table of
+            // contents (shown when a post has 2+ headings).
+            { title: 'Heading', value: 'h2' },
+            { title: 'Subheading', value: 'h3' },
             { title: 'Quote', value: 'blockquote' },
           ],
           marks: {

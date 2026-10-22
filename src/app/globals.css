@@ -1018,6 +1018,67 @@ img {
 .article-prose blockquote p {
   margin: 0;
 }
+/* In-body section headings (Portable Text h2/h3) that anchor the table of contents */
+.article-h2,
+.article-h3 {
+  font-family: var(--font-heading);
+  color: var(--text);
+  line-height: 1.3;
+  scroll-margin-top: 24px;
+}
+.article-h2 {
+  font-size: clamp(24px, 3vw, 32px);
+  margin: 48px 0 14px;
+}
+.article-h3 {
+  font-size: clamp(20px, 2.4vw, 24px);
+  color: var(--gold-bright);
+  margin: 36px 0 12px;
+}
+
+/* Table of contents */
+.toc {
+  border: 1px solid var(--gold-line);
+  border-radius: 8px;
+  background: var(--panel);
+  padding: 22px 26px;
+  margin: 0 0 40px;
+}
+.toc__title {
+  font-family: var(--font-heading);
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold-80);
+  margin: 0 0 12px;
+}
+.toc__list {
+  margin: 0;
+  padding: 0 0 0 1.2em;
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.5;
+  color: var(--text-75);
+}
+.toc__item {
+  margin: 0 0 8px;
+}
+.toc__item:last-child {
+  margin-bottom: 0;
+}
+.toc__item--sub {
+  margin-left: 1em;
+  list-style-type: lower-roman;
+  font-size: 16px;
+  color: var(--text-65);
+}
+.toc__list a {
+  color: inherit;
+}
+.toc__list a:hover {
+  color: var(--gold-bright);
+}
+
 .pull-quote {
   border-top: 1px solid var(--gold-line-3);
   border-bottom: 1px solid var(--gold-line-3);
