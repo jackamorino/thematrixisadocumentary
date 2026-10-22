@@ -40,7 +40,9 @@ export default async function HomePage() {
   ]);
 
   const previewPosts = posts.slice(0, 3);
-  const bandVideos = videosEnabled ? (await getVideos()).slice(0, 3) : [];
+  const bandVideos = videosEnabled
+    ? (await getVideos()).filter((v) => v.format !== 'short').slice(0, 3)
+    : [];
 
   return (
     <>

@@ -15,8 +15,23 @@ export const video = defineType({
       name: 'youtubeId',
       title: 'YouTube Video ID',
       type: 'string',
-      description: 'The id after watch?v= (e.g. dQw4w9WgXcQ).',
+      description:
+        'The id after watch?v= for a standard video, or after /shorts/ for a Short.',
       validation: (r) => r.required(),
+    }),
+    defineField({
+      name: 'format',
+      title: 'Format',
+      type: 'string',
+      description: 'Shorts render vertical (9:16) in their own row.',
+      options: {
+        list: [
+          { title: 'Standard (16:9)', value: 'standard' },
+          { title: 'Short (9:16)', value: 'short' },
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'standard',
     }),
     defineField({
       name: 'cycle',

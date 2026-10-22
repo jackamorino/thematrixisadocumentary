@@ -88,9 +88,10 @@ export const seedVideos: Video[] = [
   },
   {
     _id: 'seed-video-language-trap',
-    title: 'The Language Trap — which words are speaking you?',
+    title: 'The Language Trap: which words are speaking you?',
     youtubeId: '',
     cycle: 'cycle3',
+    format: 'short',
     publishedAt: '2026-01-04',
   },
   {
@@ -105,6 +106,7 @@ export const seedVideos: Video[] = [
     title: 'The Ritual of the Moon',
     youtubeId: '',
     cycle: 'cycle1',
+    format: 'short',
     publishedAt: '2026-01-02',
   },
   {

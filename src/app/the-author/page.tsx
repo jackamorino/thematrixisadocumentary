@@ -6,7 +6,7 @@ import { JsonLd } from '@/components/JsonLd';
 import { Nav } from '@/components/Nav';
 import { getAuthor } from '@/lib/data';
 import { breadcrumbJsonLd, pageMetadata, personJsonLd } from '@/lib/seo';
-import { buyLinks, videosEnabled } from '@/lib/site';
+import { buyLinks, socialLinks, videosEnabled } from '@/lib/site';
 
 export const metadata = pageMetadata({
   title: 'The Author',
@@ -65,6 +65,18 @@ export default async function TheAuthorPage() {
                 {para}
               </p>
             ))}
+            <div className="author-socials" aria-label="Follow Jack Amorino">
+              <span className="author-socials__label">FOLLOW</span>
+              <a href={socialLinks.youtube} target="_blank" rel="me noopener noreferrer">
+                YouTube
+              </a>
+              <a href={socialLinks.tiktok} target="_blank" rel="me noopener noreferrer">
+                TikTok
+              </a>
+              <a href={socialLinks.x} target="_blank" rel="me noopener noreferrer">
+                X
+              </a>
+            </div>
           </div>
         </section>
 

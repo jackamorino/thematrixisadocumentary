@@ -40,6 +40,20 @@ export const buyLinks = {
 } as const;
 
 /**
+ * Social profiles. These are plain links (shown in the footer and on the Author page)
+ * and feed the Person/Organization `sameAs` for SEO. They are NOT gated by the video
+ * section flag — the channels exist whether or not videos are embedded on-site.
+ */
+export const socialLinks = {
+  youtube: buyLinks.youtube,
+  youtubeShorts:
+    process.env.NEXT_PUBLIC_YOUTUBE_SHORTS_URL ||
+    'https://www.youtube.com/@DecodeTheReal/shorts',
+  tiktok: process.env.NEXT_PUBLIC_TIKTOK_URL || 'https://www.tiktok.com/@decodethereal',
+  x: process.env.NEXT_PUBLIC_X_URL || 'https://x.com/DecodeTheReal',
+} as const;
+
+/**
  * Master switch for the whole video / Decode The Real section (nav item, footer
  * YouTube link, homepage band, author cross-promo, /videos route, sitemap + JSON-LD).
  * Build-time so it reaches client components (Nav) and next.config. Flip

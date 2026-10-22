@@ -8,6 +8,8 @@ interface LiteYouTubeProps {
   id: string;
   title: string;
   large?: boolean;
+  /** Render vertical (9:16) for YouTube Shorts. */
+  short?: boolean;
 }
 
 /**
@@ -15,8 +17,9 @@ interface LiteYouTubeProps {
  * iframe on interaction, keeping full iframes off the initial paint. When no id is
  * set yet (pre-launch), links out to the channel instead.
  */
-export function LiteYouTube({ id, title, large = false }: LiteYouTubeProps) {
+export function LiteYouTube({ id, title, large = false, short = false }: LiteYouTubeProps) {
   const [playing, setPlaying] = useState(false);
+  const thumbClass = `video-thumb${short ? ' video-thumb--short' : ''}`;
 
   if (!id) {
     return (
@@ -24,7 +27,7 @@ export function LiteYouTube({ id, title, large = false }: LiteYouTubeProps) {
         href={buyLinks.youtube}
         target="_blank"
         rel="noopener noreferrer"
-        className="video-thumb"
+        className={thumbClass}
         aria-label={`${title}, watch on YouTube`}
       >
         <span className={`video-thumb__play${large ? ' video-thumb__play--lg' : ''}`}>▶</span>
@@ -34,7 +37,7 @@ export function LiteYouTube({ id, title, large = false }: LiteYouTubeProps) {
 
   if (playing) {
     return (
-      <div className="video-thumb">
+      <div className={thumbClass}>
         <iframe
           src={`https://www.youtube-nocookie.com/embed/${id}?autoplay=1`}
           title={title}
@@ -49,7 +52,7 @@ export function LiteYouTube({ id, title, large = false }: LiteYouTubeProps) {
   return (
     <button
       type="button"
-      className="video-thumb"
+      className={thumbClass}
       onClick={() => setPlaying(true)}
       aria-label={`Play: ${title}`}
       style={{ border: 0, cursor: 'pointer', padding: 0, width: '100%' }}

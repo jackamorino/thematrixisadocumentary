@@ -6,7 +6,7 @@ import { LiteYouTube } from '@/components/LiteYouTube';
 import { Nav } from '@/components/Nav';
 import { getVideos } from '@/lib/data';
 import { breadcrumbJsonLd, pageMetadata, videoJsonLd } from '@/lib/seo';
-import { buyLinks, cycleLabel, videosEnabled } from '@/lib/site';
+import { buyLinks, cycleLabel, socialLinks, videosEnabled } from '@/lib/site';
 
 export const metadata = pageMetadata({
   title: 'Videos',
@@ -22,8 +22,12 @@ export default async function VideosPage() {
   if (!videosEnabled) redirect('/');
 
   const videos = await getVideos();
-  const featured = videos.find((v) => v.featured) ?? videos[0];
-  const rest = featured ? videos.filter((v) => v._id !== featured._id) : videos;
+  const shorts = videos.filter((v) => v.format === 'short');
+  const standard = videos.filter((v) => v.format !== 'short');
+  const featured = standard.find((v) => v.featured) ?? standard[0];
+  const rest = featured
+    ? standard.filter((v) => v._id !== featured._id)
+    : standard;
 
   const videoLd = videos
     .map((v) => videoJsonLd(v))
@@ -105,6 +109,41 @@ export default async function VideosPage() {
             </div>
           ))}
         </section>
+
+        {shorts.length > 0 && (
+          <section
+            className="section"
+            style={{ paddingTop: 0 }}
+            aria-labelledby="shorts-title"
+          >
+            <div className="section__head-row">
+              <div>
+                <p className="eyebrow">SHORT FORM</p>
+                <h2 className="section-title" id="shorts-title" style={{ fontSize: 'clamp(26px,3vw,36px)' }}>
+                  Shorts
+                </h2>
+              </div>
+              <a
+                href={socialLinks.youtubeShorts}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-link"
+              >
+                All Shorts →
+              </a>
+            </div>
+            <div className="grid-shorts">
+              {shorts.map((video) => (
+                <div className="video-card" key={video._id}>
+                  <LiteYouTube id={video.youtubeId} title={video.title} short />
+                  <div className="video-card__body">
+                    <div className="video-card__title">{video.title}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
       </main>
 
       <Footer />

@@ -39,7 +39,7 @@ export const relatedPostsQuery = groq`
 
 export const allVideosQuery = groq`
   *[_type == "video"] | order(featured desc, publishedAt desc) {
-    _id, title, youtubeId, cycle, featured, publishedAt
+    _id, title, youtubeId, cycle, format, featured, publishedAt
   }
 `;
 

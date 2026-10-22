@@ -37,6 +37,8 @@ export interface Video {
   title: string;
   youtubeId: string;
   cycle: CycleKey;
+  /** 'short' renders vertical (9:16) in a dedicated Shorts row; default 'standard'. */
+  format?: 'standard' | 'short';
   featured?: boolean;
   publishedAt: string;
 }

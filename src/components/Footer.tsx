@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
 import { CookiePreferencesLink } from '@/components/CookiePreferencesLink';
-import { buyLinks, siteConfig, videosEnabled, withUtm } from '@/lib/site';
+import { buyLinks, siteConfig, socialLinks, withUtm } from '@/lib/site';
 
 export function Footer() {
   return (
@@ -22,11 +22,15 @@ export function Footer() {
         >
           Apple Books
         </a>
-        {videosEnabled && (
-          <a href={buyLinks.youtube} target="_blank" rel="noopener noreferrer">
-            YouTube
-          </a>
-        )}
+        <a href={socialLinks.youtube} target="_blank" rel="noopener noreferrer">
+          YouTube
+        </a>
+        <a href={socialLinks.tiktok} target="_blank" rel="noopener noreferrer">
+          TikTok
+        </a>
+        <a href={socialLinks.x} target="_blank" rel="noopener noreferrer">
+          X
+        </a>
         <Link href="/blog">Blog</Link>
         <Link href="/contact">Contact</Link>
         <Link href="/privacy">Privacy</Link>

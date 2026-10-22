@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 
-import { buyLinks, cycleLabel, siteConfig, SITE_URL } from './site';
+import { buyLinks, cycleLabel, siteConfig, SITE_URL, socialLinks } from './site';
 import type { Post, Video } from './types';
 
 // 1200x630 landscape share card (assets/og-image.png). The portrait book cover
@@ -76,6 +76,7 @@ export function organizationJsonLd(): JsonLd {
       width: 1200,
       height: 630,
     },
+    sameAs: [socialLinks.youtube, socialLinks.tiktok, socialLinks.x],
   };
 }
 
@@ -107,9 +108,9 @@ export function personJsonLd(opts: { image?: string } = {}): JsonLd {
       'Ayahuasca Ceremonies',
     ],
     ...(opts.image ? { image: opts.image } : {}),
-    // Phase 3 (E-E-A-T): append Amazon Author Central, Goodreads, and social URLs
-    // here as they are created.
-    sameAs: [buyLinks.youtube],
+    // Phase 3 (E-E-A-T): append Amazon Author Central and Goodreads URLs here as
+    // they are created.
+    sameAs: [socialLinks.youtube, socialLinks.tiktok, socialLinks.x],
     mainEntityOfPage: `${SITE_URL}/the-author`,
   };
 }
