@@ -4,10 +4,11 @@ import { Footer } from '@/components/Footer';
 import { JsonLd } from '@/components/JsonLd';
 import { LiteYouTube } from '@/components/LiteYouTube';
 import { Nav } from '@/components/Nav';
+import { ShortsGrid } from '@/components/ShortsGrid';
 import { getVideos } from '@/lib/data';
 import { breadcrumbJsonLd, pageMetadata, videoJsonLd } from '@/lib/seo';
 import { buyLinks, cycleLabel, socialLinks, videosEnabled } from '@/lib/site';
-import { getLatestShorts } from '@/lib/youtube';
+import { getAllShorts } from '@/lib/youtube';
 
 export const metadata = pageMetadata({
   title: 'Videos',
@@ -22,8 +23,8 @@ export default async function VideosPage() {
   // redirected in next.config; the guard here is the belt-and-suspenders.
   if (!videosEnabled) redirect('/');
 
-  // Long-form videos come from Sanity (manual); Shorts auto-sync from YouTube's feed.
-  const [videos, shorts] = await Promise.all([getVideos(), getLatestShorts()]);
+  // Long-form videos come from Sanity (manual); every Short auto-syncs from YouTube.
+  const [videos, shorts] = await Promise.all([getVideos(), getAllShorts()]);
   const standard = videos.filter((v) => v.format !== 'short');
   const featured = standard.find((v) => v.featured) ?? standard[0];
   const rest = featured
@@ -32,15 +33,18 @@ export default async function VideosPage() {
 
   const videoLd = [
     ...standard.map((v) => videoJsonLd(v)),
-    ...shorts.map((s) =>
-      videoJsonLd({
-        _id: s.id,
-        title: s.title,
-        youtubeId: s.id,
-        cycle: 'cycle1',
-        publishedAt: s.publishedAt,
-      })
-    ),
+    // VideoObject needs an uploadDate, so undated Shorts are left out of the JSON-LD.
+    ...shorts
+      .filter((s) => s.publishedAt)
+      .map((s) =>
+        videoJsonLd({
+          _id: s.id,
+          title: s.title,
+          youtubeId: s.id,
+          cycle: 'cycle1',
+          publishedAt: s.publishedAt,
+        })
+      ),
   ].filter((x): x is Record<string, unknown> => Boolean(x));
 
   return (
@@ -144,16 +148,7 @@ export default async function VideosPage() {
                 All Shorts →
               </a>
             </div>
-            <div className="grid-shorts">
-              {shorts.map((short) => (
-                <div className="video-card" key={short.id}>
-                  <LiteYouTube id={short.id} title={short.title} short />
-                  <div className="video-card__body">
-                    <div className="video-card__title">{short.title}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
+            <ShortsGrid shorts={shorts} />
           </section>
         )}
 
